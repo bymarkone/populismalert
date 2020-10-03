@@ -37,10 +37,18 @@ function BBNN() {
   return (
       <div className="bbnn">
         <h2 className="bbnn-title">BBNN Model</h2>
+        <div className="marker"></div>
+        <div className="ping"></div>
         <section className="bbnn-content">
           <section className="bbnn-model">
             <svg xmlns="http://www.w3.org/2000/svg" className="bbnn-graph" viewBox="0 0 200 200"
                  preserveAspectRatio={"xMinYMax meet"}>
+
+              <circle className="circle first-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
+              <circle className="circle second-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
+              <circle className="circle third-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
+              <circle className="circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
+
               <defs>
                 <marker id="startarrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
                   <polygon points="10 0, 10 7, 0 3.5"/>
@@ -65,6 +73,7 @@ function BBNN() {
 
               <line className={`has-details internal ${selected === 'internal' ? 'selected' : ''}`} x1="30" y1="30"
                     x2="170" y2="170" onClick={select('internal')}/>
+
 
               {selected === 'internal' && [
                 <line className="internal-details" x1="95" y1="135" x2="135" y2="95" strokeDasharray={"2 2"}
@@ -95,6 +104,7 @@ function BBNN() {
                 <text x="85" y="160" className={`small ${selected}`}>Social Peace</text>,
                 <text x="85" y="175" className={`small line-title ${selected}`}>Social Peace Line</text>
               ]}
+
 
               <circle className="has-details equilibrium" cx="100" cy="100" r={`${highlighted('equilibrium') ? 4 : 2}`}
                       onMouseOver={hover('equilibrium')}
