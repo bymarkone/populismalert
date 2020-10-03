@@ -5,7 +5,7 @@ import Indicator from "./Indicator";
 
 function BBNN() {
 
-  const [indicator, setIndicator] = useState<Indicator>();
+  const [indicators, setIndicators] = useState<Indicator[]>();
   const [selected, setSelected] = useState<string>();
   const [hovered, setHovered] = useState<String>();
 
@@ -27,27 +27,46 @@ function BBNN() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIndicator(await getCountryData("us"))
+      setIndicators(await getCountryData("us"))
     }
     fetchData()
   }, [])
 
-  const IndicatorsTable = indicator?.series.map((item) => <p>{item.value}</p>)
+  const lastCurrentAccount = indicators
+      ?.find((indicator) => indicator.name === 'Current Account to GDP')
+      ?.series.find((seriesItem) => seriesItem.date === "2019-01-01")
+      ?.value
+
+  const lastWageGrowth = indicators
+      ?.find((indicator) => indicator.name === 'Wage Growth')
+      ?.series.find((seriesItem) => seriesItem.date === "2019-01-01")
+      ?.value
+
+  const lastInflationRate = indicators
+      ?.find((indicator) => indicator.name === 'Inflation Rate')
+      ?.series.find((seriesItem) => seriesItem.date === "2019-01-01")
+      ?.value
+
+  const realWageGrowth = (lastWageGrowth ?? 0) - (lastInflationRate ?? 0);
+
+  const calculateCoordinates = (current: number | undefined, wage: number | undefined) => {
+    if (!current || !wage) return [0, 0]
+    let scaledCurrent = current * 10, scaledWage = wage * 10;
+    let x = 100 - scaledCurrent , y = 100 - scaledCurrent ;
+    return [x + scaledWage, y - scaledWage]
+  }
+
+  let [x, y] = calculateCoordinates(lastCurrentAccount, realWageGrowth)
 
   return (
       <div className="bbnn">
         <h2 className="bbnn-title">BBNN Model</h2>
-        <div className="marker"></div>
-        <div className="ping"></div>
+        <p>{lastCurrentAccount},{lastWageGrowth}</p>
+        <p>{x},{y}</p>
         <section className="bbnn-content">
           <section className="bbnn-model">
             <svg xmlns="http://www.w3.org/2000/svg" className="bbnn-graph" viewBox="0 0 200 200"
                  preserveAspectRatio={"xMinYMax meet"}>
-
-              <circle className="circle first-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
-              <circle className="circle second-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
-              <circle className="circle third-circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
-              <circle className="circle" fill="#FF6347" cx="75" cy="75" r="5"></circle>
 
               <defs>
                 <marker id="startarrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
@@ -73,7 +92,6 @@ function BBNN() {
 
               <line className={`has-details internal ${selected === 'internal' ? 'selected' : ''}`} x1="30" y1="30"
                     x2="170" y2="170" onClick={select('internal')}/>
-
 
               {selected === 'internal' && [
                 <line className="internal-details" x1="95" y1="135" x2="135" y2="95" strokeDasharray={"2 2"}
@@ -127,8 +145,14 @@ function BBNN() {
                 <text x="150" y="142" className={`small line-title ${selected}`}>Populism Point</text>
               ]}
 
+              <circle className="circle first-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle second-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle third-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
+
             </svg>
           </section>
+
           <section className="bbnn-explanation">
             {selected === 'internal' &&
             <h3>The internal equilibrium line</h3>

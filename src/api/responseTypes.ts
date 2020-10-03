@@ -1,3 +1,3 @@
 import Indicator from '../Indicator';
 
-export type GetIndicatorResponse = Indicator;
+export type GetIndicatorsResponse = Indicator[];
