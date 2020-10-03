@@ -1,0 +1,113 @@
+.bbnn {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  width: 100%;
+  padding: 2vmin;
+}
+
+.bbnn-title {
+  align-self: start;
+  font-weight: 300;
+}
+
+.bbnn-model {
+  order: 1;
+  flex-basis: 70vh;
+  border: #f1f1f1 solid 2px;
+}
+
+.bbnn-explanation {
+  order: 2;
+  flex-basis: 30vh;
+  padding-left: 3vh;
+
+  h3 {
+    font-weight: 300;
+  }
+}
+
+.bbnn-content {
+  display: flex;
+  flex-direction: row;
+}
+
+.bbnn-graph {
+  width: 100%;
+}
+
+.axis {
+  stroke: #000;
+  stroke-width: 0.5px;
+}
+
+.axis-legend {
+  font-size: 0.6vw;
+}
+
+.internal {
+  stroke: #E6B0AA;
+  fill: #E6B0AA;
+  stroke-width: 0.5px;
+}
+
+.internal-details {
+  stroke: #E6B0AA;
+  stroke-width: 0.5px;
+  opacity: 50%;
+}
+
+.external {
+  stroke: #A9CCE3;
+  fill: #A9CCE3;
+  stroke-width: 0.5px;
+}
+
+.external-details {
+  stroke: #A9CCE3;
+  stroke-width: 0.5px;
+  opacity: 50%;
+}
+
+.social {
+  stroke: #7DCEA0;
+  fill: #7DCEA0;
+  stroke-width: 0.5px;
+}
+
+.social-details {
+  stroke: #7DCEA0;
+  stroke-width: 0.5px;
+  opacity: 50%;
+}
+
+.line-title {
+  font-weight: bold;
+}
+
+.small {
+  font-size: 5px;
+  stroke-width: 0.1px;
+}
+
+.has-details:hover {
+  stroke-width: 2.0;
+}
+
+.has-details.selected {
+  stroke-width: 2.0;
+}
+
+.equilibrium {
+  fill: #6E2C00;
+
+}
+
+.elitism {
+  fill: #6E2C00;
+}
+
+.populism {
+  fill: #6E2C00;
+}
+
