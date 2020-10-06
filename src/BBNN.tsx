@@ -1,10 +1,12 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react'
+import React, {SyntheticEvent, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import {getCountryData} from "./api/endpoints";
 import './bbnn.scss'
 import Indicator from "./Indicator";
 
 function BBNN() {
 
+  const { countryId } = useParams();
   const [indicators, setIndicators] = useState<Indicator[]>();
   const [selected, setSelected] = useState<string>();
   const [hovered, setHovered] = useState<String>();
@@ -27,7 +29,7 @@ function BBNN() {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIndicators(await getCountryData("us"))
+      setIndicators(await getCountryData(countryId))
     }
     fetchData()
   }, [])
