@@ -1,12 +1,13 @@
-import React, {SyntheticEvent, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom';
 import {getCountryData} from "./api/endpoints";
 import './bbnn.scss'
 import Indicator from "./Indicator";
+import ParamTypes from "./ParamTypes"
 
 function BBNN() {
 
-  const { countryId } = useParams();
+  const {countryId} = useParams<ParamTypes>();
   const [indicators, setIndicators] = useState<Indicator[]>();
   const [selected, setSelected] = useState<string>();
   const [hovered, setHovered] = useState<String>();
@@ -54,7 +55,7 @@ function BBNN() {
   const calculateCoordinates = (current: number | undefined, wage: number | undefined) => {
     if (!current || !wage) return [0, 0]
     let scaledCurrent = current * 10, scaledWage = wage * 10;
-    let x = 100 - scaledCurrent , y = 100 - scaledCurrent ;
+    let x = 100 - scaledCurrent, y = 100 - scaledCurrent;
     return [x + scaledWage, y - scaledWage]
   }
 
@@ -63,8 +64,6 @@ function BBNN() {
   return (
       <div className="bbnn">
         <h2 className="bbnn-title">BBNN Model</h2>
-        <p>{lastCurrentAccount},{lastWageGrowth}</p>
-        <p>{x},{y}</p>
         <section className="bbnn-content">
           <section className="bbnn-model">
             <svg xmlns="http://www.w3.org/2000/svg" className="bbnn-graph" viewBox="0 0 200 200"
@@ -147,9 +146,12 @@ function BBNN() {
                 <text x="150" y="142" className={`small line-title ${selected}`}>Populism Point</text>
               ]}
 
-              <circle className="circle first-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
-              <circle className="circle second-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
-              <circle className="circle third-circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle first-circle" fill="#FF6347" cx={x} cy={y} r="5"
+                      transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle second-circle" fill="#FF6347" cx={x} cy={y} r="5"
+                      transform-origin={`${x}px ${y}px`}/>
+              <circle className="circle third-circle" fill="#FF6347" cx={x} cy={y} r="5"
+                      transform-origin={`${x}px ${y}px`}/>
               <circle className="circle" fill="#FF6347" cx={x} cy={y} r="5" transform-origin={`${x}px ${y}px`}/>
 
             </svg>
